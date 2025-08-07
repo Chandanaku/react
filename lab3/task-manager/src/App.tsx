@@ -1,20 +1,26 @@
 import "./App.css";
 import TaskItem from "./components/TaskItem";
+//import type { TaskStatus } from "./types";
 function App() {
-  const t = {
-    id: "1",
-    title: "task1",
-    description: "string",
-    status: "pending",
-    priority: "low",
-    dueDate: new Date(),
-  };
   return (
     <>
       <section>
         <h1>Task-Manager</h1>
       </section>
-      <TaskItem task={t} />
+      <TaskItem
+        task={{
+          id: "1",
+          title: "Task1",
+          description: "jbhjbdshfb",
+          status: "pending",
+          priority: "low",
+          dueDate: new Date(),
+        }}
+        onStatusChange={() => {
+          console.log("welcome");
+        }}
+        onDelete={() => {}}
+      />
     </>
   );
 }

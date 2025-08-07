@@ -6,7 +6,7 @@ export interface Task {
   description: string;
   status: TaskStatus;
   priority: "low" | "medium" | "high";
-  dueDate: string;
+  dueDate: Date;
 }
 
 export interface TaskListProps {

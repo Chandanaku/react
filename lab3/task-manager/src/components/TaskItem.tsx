@@ -1,50 +1,89 @@
-export interface TaskItemProps {
-  task: Task;
-  onStatusChange: (taskId: string, newStatus: TaskStatus) => void;
-  onDelete: (taskId: string) => void;
-}
-export type TaskStatus = "pending" | "in-progress" | "completed";
-
-export interface Task {
-  id: string;
-  title: string;
-  description: string;
-  status: TaskStatus;
-  priority: "low" | "medium" | "high";
-  dueDate: string;
-}
+import type { TaskStatus } from "../types";
+import type { TaskItemProps } from "../types";
+//import type{ Task } from "../types";
 
 function TaskItem({ task, onStatusChange, onDelete }: TaskItemProps) {
   return (
     <div
       style={{
-        border: "1px solid #333",
-        padding: "12px",
-        borderRadius: "8px",
-        marginBottom: "12px",
+        border: "1px solid #ccc",
+        padding: "16px",
+        borderRadius: "10px",
+        display: "grid",
+        gridTemplateColumns: "2fr 1fr",
+        gap: "16px",
+        alignItems: "center",
+        maxWidth: "600px",
+        backgroundColor: "#f9f9f9",
+        boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
+        marginBottom: "16px",
       }}
     >
-      <h4>
-        <p>{task.id}</p>
-        {task.title}
-      </h4>
-
-      <p>{task.description}</p>
-      <p>Priority: {task.priority}</p>
-      <p>Due: {task.dueDate}</p>
-      <select
-        value={task.status}
-        onChange={(e) => onStatusChange(task.id, e.target.value as TaskStatus)}
-        style={{ marginRight: "12px" }}
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "18px",
+        }}
       >
-        <option value="Pending">Pending</option>
-        <option value="In Progress">In Progress</option>
-        <option value="Completed">Completed</option>
-      </select>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "5px",
+            textAlign: "left",
+          }}
+        >
+          <h3 style={{ margin: 0 }}>{task.title}</h3>
+          <p style={{ margin: 0, color: "black" }}>{task.description}</p>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            gap: "20px",
+            fontSize: "0.9rem",
+            color: "#666",
+          }}
+        >
+          <span>Priority: {task.priority}</span>
+          <span>Due: {task.dueDate.toDateString()}</span>
+        </div>
+      </div>
 
-      <button onClick={() => onDelete(task.id)} style={{ color: "red" }}>
-        Delete
-      </button>
+      <div style={{ alignItems: "" }}>
+        <select
+          value={task.status}
+          onChange={(e) =>
+            onStatusChange(task.id, e.target.value as TaskStatus)
+          }
+          style={{
+            borderRadius: "4px",
+            border: "1px solid #aaa",
+            backgroundColor: "yellow",
+            fontSize: "0.9rem",
+            height: "30px",
+          }}
+        >
+          <option value="pending">Pending</option>
+          <option value="in-progress">In Progress</option>
+          <option value="completed">Completed</option>
+        </select>
+
+        <button
+          onClick={() => onDelete(task.id)}
+          style={{
+            padding: "6px 12px",
+            borderRadius: "4px",
+            backgroundColor: "#ff4d4f",
+            color: "#fff",
+            border: "none",
+            cursor: "pointer",
+            marginLeft: "10px",
+          }}
+        >
+          Delete
+        </button>
+      </div>
     </div>
   );
 }
