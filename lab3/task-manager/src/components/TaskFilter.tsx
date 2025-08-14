@@ -1,12 +1,7 @@
 import React from "react";
 import type { TaskStatus } from "../../src/types";
 
-export interface TaskFilterProps {
-  onFilterChange: (filters: {
-    status?: TaskStatus;
-    priority?: "low" | "medium" | "high";
-  }) => void;
-}
+import type { TaskFilterProps } from "../../src/types";
 
 function TaskFilter({ onFilterChange }: TaskFilterProps) {
   const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -23,7 +18,7 @@ function TaskFilter({ onFilterChange }: TaskFilterProps) {
         Status:
         <select onChange={handleStatusChange}>
           <option value="">All</option>
-          <option value="pending">To Do</option>
+          <option value="pending">Pending</option>
           <option value="in-progress">In Progress</option>
           <option value="done">Done</option>
         </select>
