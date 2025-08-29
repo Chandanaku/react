@@ -1,37 +1,16 @@
 import "./App.css";
-import TaskList from "./components/TaskList";
-import type { TaskStatus } from "./types";
-import TaskFilter from "./components/TaskFilter";
+import Dashboard from "./components/Dashboard";
 
 function App() {
   return (
     <>
-      <section style={{ marginBottom: "30px" }}>
-        <h1>Task-Manager</h1>
-        <TaskFilter onFilterChange={() => {}} />
-      </section>
-      <TaskList
-        tasks={[
-          {
-            id: "1",
-            title: "Task1",
-            description: "gen1",
-            status: "pending" as TaskStatus,
-            priority: "low",
-            dueDate: new Date(),
-          },
-          {
-            id: "2",
-            title: "Task2",
-            description: "gen1",
-            status: "pending" as TaskStatus,
-            priority: "low",
-            dueDate: new Date(),
-          },
-        ]}
-        onStatusChange={() => {}}
-        onDelete={() => {}}
-      />
+      <h1>Task-Manager</h1>
+      <div style={{ display: "grid", gridTemplateColumns: "2 2fr" }}>
+        <div>
+          <Dashboard></Dashboard>
+          <div></div>
+        </div>
+      </div>
     </>
   );
 }

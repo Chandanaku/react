@@ -8,18 +8,26 @@ export interface Task {
   priority: "low" | "medium" | "high";
   dueDate: Date;
 }
+export interface TaskItemProps {
+  task: Task;
+  onStatusChange: (taskId: string, newStatus: TaskStatus) => void;
+  onPriorityChange: (
+    taskId: string,
+    newPriority: "low" | "medium" | "high"
+  ) => void;
+  onDelete: (taskId: string) => void;
+}
 
 export interface TaskListProps {
   tasks: Task[];
   onStatusChange: (taskId: string, newStatus: TaskStatus) => void;
+  onPriorityChange: (
+    taskId: string,
+    newPriority: "low" | "medium" | "high"
+  ) => void;
   onDelete: (taskId: string) => void;
 }
 
-export interface TaskItemProps {
-  task: Task;
-  onStatusChange: (taskId: string, newStatus: TaskStatus) => void;
-  onDelete: (taskId: string) => void;
-}
 export interface TaskFilterProps {
   onFilterChange: (filters: {
     status?: TaskStatus;

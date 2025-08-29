@@ -1,8 +1,45 @@
-import type { TaskStatus } from "../types";
-import type { TaskItemProps } from "../types";
-//import type{ Task } from "../types";
+import type { TaskItemProps, TaskStatus } from "../types";
 
-function TaskItem({ task, onStatusChange, onDelete }: TaskItemProps) {
+const STATUS_ORDER: TaskStatus[] = ["pending", "in-progress", "completed"];
+const PRIORITY_ORDER: Array<"low" | "medium" | "high"> = [
+  "low",
+  "medium",
+  "high",
+];
+
+const STATUS_COLOR: Record<TaskStatus, string> = {
+  pending: "#f0ad4e", // orange
+  "in-progress": "#5bc0de", // blue
+  completed: "#5cb85c", // green
+};
+
+const PRIORITY_COLOR: Record<"low" | "medium" | "high", string> = {
+  low: "#5bc0de", // blue
+  medium: "#f0ad4e", // orange
+  high: "#d9534f", // red
+};
+
+function TaskItem({
+  task,
+  onStatusChange,
+  onPriorityChange,
+  onDelete,
+}: TaskItemProps) {
+  const handleStatusClick = () => {
+    const currentIndex = STATUS_ORDER.indexOf(task.status);
+    const nextStatus = STATUS_ORDER[(currentIndex + 1) % STATUS_ORDER.length];
+    onStatusChange(task.id, nextStatus);
+  };
+  const getDueStatus = (dueDate: Date) => {
+    return dueDate < new Date() ? "⏰ Late" : "✅ Still have time";
+  };
+  const handlePriorityClick = () => {
+    const currentIndex = PRIORITY_ORDER.indexOf(task.priority);
+    const nextPriority =
+      PRIORITY_ORDER[(currentIndex + 1) % PRIORITY_ORDER.length];
+    onPriorityChange(task.id, nextPriority);
+  };
+
   return (
     <div
       style={{
@@ -19,13 +56,7 @@ function TaskItem({ task, onStatusChange, onDelete }: TaskItemProps) {
         marginBottom: "16px",
       }}
     >
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "18px",
-        }}
-      >
+      <div style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
         <div
           style={{
             display: "flex",
@@ -37,38 +68,52 @@ function TaskItem({ task, onStatusChange, onDelete }: TaskItemProps) {
           <h3 style={{ margin: 0 }}>{task.title}</h3>
           <p style={{ margin: 0, color: "black" }}>{task.description}</p>
         </div>
+
         <div
           style={{
             display: "flex",
-            gap: "20px",
+            gap: "12px",
             fontSize: "0.9rem",
-            color: "#666",
+            alignItems: "center",
           }}
         >
-          <span>Priority: {task.priority}</span>
-          <span>Due: {task.dueDate.toDateString()}</span>
+          <button
+            onClick={handleStatusClick}
+            style={{
+              padding: "4px 10px",
+              borderRadius: "4px",
+              border: "none",
+              cursor: "pointer",
+              backgroundColor: STATUS_COLOR[task.status],
+              color: "#fff",
+            }}
+          >
+            {task.status.toUpperCase()}
+          </button>
+
+          <p>
+            <strong>Due:</strong> {task.dueDate.toLocaleDateString()} (
+            {getDueStatus(task.dueDate)})
+          </p>
+          <button
+            onClick={handlePriorityClick}
+            style={{
+              padding: "4px 10px",
+              borderRadius: "4px",
+              border: "none",
+              cursor: "pointer",
+              backgroundColor: PRIORITY_COLOR[task.priority],
+              color: "#fff",
+            }}
+          >
+            {task.priority.toUpperCase()}
+          </button>
+
+          <span>Due: {new Date(task.dueDate).toDateString()}</span>
         </div>
       </div>
 
-      <div style={{ alignItems: "" }}>
-        <select
-          value={task.status}
-          onChange={(e) =>
-            onStatusChange(task.id, e.target.value as TaskStatus)
-          }
-          style={{
-            borderRadius: "4px",
-            border: "1px solid #aaa",
-            backgroundColor: "yellow",
-            fontSize: "0.9rem",
-            height: "30px",
-          }}
-        >
-          <option value="pending">Pending</option>
-          <option value="in-progress">In Progress</option>
-          <option value="completed">Completed</option>
-        </select>
-
+      <div>
         <button
           onClick={() => onDelete(task.id)}
           style={{
@@ -78,7 +123,6 @@ function TaskItem({ task, onStatusChange, onDelete }: TaskItemProps) {
             color: "#fff",
             border: "none",
             cursor: "pointer",
-            marginLeft: "10px",
           }}
         >
           Delete
