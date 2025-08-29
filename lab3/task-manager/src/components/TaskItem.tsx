@@ -8,15 +8,15 @@ const PRIORITY_ORDER: Array<"low" | "medium" | "high"> = [
 ];
 
 const STATUS_COLOR: Record<TaskStatus, string> = {
-  pending: "#f0ad4e", // orange
-  "in-progress": "#5bc0de", // blue
-  completed: "#5cb85c", // green
+  pending: "#f0ad4e",
+  "in-progress": "#5bc0de",
+  completed: "#5cb85c",
 };
 
 const PRIORITY_COLOR: Record<"low" | "medium" | "high", string> = {
-  low: "#5bc0de", // blue
-  medium: "#f0ad4e", // orange
-  high: "#d9534f", // red
+  low: "#5bc0de",
+  medium: "#f0ad4e",
+  high: "#d9534f",
 };
 
 function TaskItem({
@@ -31,7 +31,7 @@ function TaskItem({
     onStatusChange(task.id, nextStatus);
   };
   const getDueStatus = (dueDate: Date) => {
-    return dueDate < new Date() ? "⏰ Late" : "✅ Still have time";
+    return dueDate < new Date() ? "Late" : "Still have time";
   };
   const handlePriorityClick = () => {
     const currentIndex = PRIORITY_ORDER.indexOf(task.priority);
