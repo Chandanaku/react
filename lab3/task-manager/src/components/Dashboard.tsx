@@ -64,20 +64,23 @@ function Dashboard() {
     >
       <div
         style={{
-          marginTop: "15pX",
+          marginTop: "15px",
           backgroundColor: "lightcyan",
           padding: "20px",
+          border: "5px solid lightblue",
         }}
       >
         <Form addTask={addTask} />
       </div>
       <div
         style={{
-          marginTop: "15pX",
+          marginTop: "15px",
           backgroundColor: "lightcyan",
           paddingTop: "90px",
+          border: "5px solid lightblue",
         }}
       >
+        <h4>Filters!</h4>
         <TaskFilter onFilterChange={setFilters} />
       </div>
       <div
